@@ -1,10 +1,11 @@
 package ru.alishev.springcourse;
+
 import java.util.*;
 
 public class MusicPlayer {
 
-    //private Music music; //поле в качестве зависимости общий интерфейс
-    private List<Music> musicList = new ArrayList<>();
+    private Music music; //поле в качестве зависимости общий интерфейс
+
 
     private String name;
     private int volume;
@@ -25,22 +26,17 @@ public class MusicPlayer {
         this.volume = volume;
     }
 
-//    public MusicPlayer(Music music) {
-//        this.music = music;
-//    }
 
-    public MusicPlayer(){
+    public MusicPlayer() {
     }
 
 
-    public void setMusicList(List<Music> musicList){
-        this.musicList = musicList;
+    public void setMusic(Music music) {
+        this.music = music;
     }
 
-    public void playMusic(){
-        System.out.print("Playing: " );
-        for (Music track: musicList){
-            System.out.print(track.getSong() + ", ");
-        }
+    public void playMusic() {
+        System.out.print("Playing: " + music.getSong());
     }
 }
+
