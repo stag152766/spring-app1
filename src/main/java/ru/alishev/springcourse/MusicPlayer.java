@@ -1,35 +1,54 @@
 package ru.alishev.springcourse;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-
+import ru.alishev.springcourse.genres.*;
+import java.util.List;
 import java.util.Random;
 
-@Component
+
 public class MusicPlayer {
 
 
-    private Music classicalMusic;
-    private Music rockMusic;
+    private List<MusicGenre> musicList;
+    private List<String> list;
 
-    @Autowired
-    public MusicPlayer(@Qualifier("classicalMusic") Music classicalMusic, @Qualifier("rockMusic") Music rockMusic) {
-        this.classicalMusic = classicalMusic;
-        this.rockMusic = rockMusic;
+
+    public MusicPlayer(List<MusicGenre> musicList) {
+        this.musicList = musicList;
     }
 
-    public String playMusic(MusicGenre genre) {
-        if (genre == MusicGenre.CLASSICAL) {
-            return "Playing: " + getRandom(classicalMusic.getSongs());
-        } else
-            return "Playing: " + getRandom(rockMusic.getSongs());
+    public MusicPlayer(List<MusicGenre> musicList, List<String> list) {
+        this.musicList = musicList;
+        this.list = list;
     }
 
-    private String getRandom(String[] array) {
+    public String playMusic() {
+        MusicGenre randomGenre = getRandomGenre(musicList);
+        Music genre;
+        if (randomGenre == MusicGenre.CLASSICAL) {
+            genre = new ClassicalMusic();
+
+        } else if (randomGenre == MusicGenre.ROCK) {
+            genre = new RockMusic();
+
+        } else {
+            genre = new RapMusic();
+        }
+        return "Playing: " + getRandomTrack(genre.getSongs());
+    }
+
+
+    private String getRandomTrack(String[] array) {
         int rnd = new Random().nextInt(array.length);
         return array[rnd];
+    }
+
+    private MusicGenre getRandomGenre(List<MusicGenre> list) {
+        int rnd = new Random().nextInt(list.size());
+        return list.get(rnd);
+    }
+
+    public List<String> getList() {
+        return list;
     }
 }
 

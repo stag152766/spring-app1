@@ -1,8 +1,9 @@
-package ru.alishev.springcourse;
+package ru.alishev.springcourse.genres;
 
 import org.springframework.stereotype.Component;
+import ru.alishev.springcourse.Music;
 
-@Component
+
 public class RockMusic implements Music {
 
     private String[] songs;
